@@ -18,7 +18,7 @@
 
 > 目的：回答"**技术方案是否完整实现了对应功能**"。本节是合格交付的硬要求，**不允许只列问题、不出矩阵**。
 
-> **FR 来源优先级（强约束）**：FR 来源 = `<TECH_DESIGN_DIR>/requirements.md`（如存在，**优先级最高**）∪ 方案内需求章节。`TECH_DESIGN_DIR` 解析见 SKILL §7.1.0（**固定 = `<原仓库根目录>/.qiqskills/backend-tech/`**，无仓库根退到 `<CWD>/.qiqskills/backend-tech/`）。两者描述同一功能不一致时，默认相信 `requirements.md`；方案需给出"为什么改 / 是否经过用户确认"的显式说明，否则视为漏抽 / 改写 / 静默删减。`requirements.md` 中"显式拒绝 / 不做"的项，方案中**不应**实现；如出现，按 §2.3"超目的实现"处理。`requirements.md` 不存在时仅以方案内需求章节为源，矩阵的"FR 来源"列填"方案 §Y"。
+> **FR 来源优先级（强约束）**：FR 来源 = `<TECH_DESIGN_DIR>/requirements.md`（如存在，**优先级最高**）∪ 方案内需求章节；`TECH_DESIGN_DIR` 按 [SKILL.md](../SKILL.md) §7.1.0 解析。两者描述同一功能不一致时，默认相信 `requirements.md`；方案需给出"为什么改 / 是否经过用户确认"的显式说明，否则视为漏抽 / 改写 / 静默删减。`requirements.md` 中"显式拒绝 / 不做"的项，方案中**不应**实现；如出现，按 §2.3"超目的实现"处理。`requirements.md` 不存在时仅以方案内需求章节为源，矩阵的"FR 来源"列填"方案 §Y"。
 
 #### 2.1 功能完整性矩阵（必填）
 

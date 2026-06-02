@@ -28,16 +28,17 @@
 
 ## 评审产物（重要）
 
-每次评审的**所有产物**（最终报告 + 备份 + 中间产物）一律落盘到 **`<REPO_ROOT>/.qiqskills/backend-tech/`**（即 `TECH_DESIGN_DIR`，固定在原仓库根目录），与 `qiq-backend-tech` 技术方案生成 skill 同址配对使用。粘贴文本 / 无仓库根场景兜底到 `<CWD>/.qiqskills/backend-tech/`。详细规则见 [SKILL.md §7.1.0](./SKILL.md)。
+每次评审的**所有产物**（最终报告 + 备份 + 中间产物）统一落盘到 **`TECH_DESIGN_DIR = <ROOT>/.qiqskills/backend-tech/<PLAN_DIR_NAME>/`**，其中 `<ROOT>` 为仓库根目录，无仓库根时为当前工作目录。详细解析规则见 [SKILL.md §7.1.0](./SKILL.md)。
 
 ```
 <REPO_ROOT>/
 ├── <方案路径>/<原方案文件>.md                      # 方案可在仓库任意子目录
-└── .qiqskills/backend-tech/                                   # 唯一产物根目录
-    ├── requirements.md                             # 由 spec skill 产出；本 skill 只读不写
-    ├── <原文件名>-review.md                        # 最终评审报告（稳定路径，重跑覆盖写）
-    ├── <原文件名>-review.bak.YYYYMMDD-HHmmss.md    # 上一版备份（重跑前重命名而来）
-    └── intermediates/                              # Step 1 / 1.5 / 1.6 中间产物
+└── .qiqskills/backend-tech/                        # skill 工作根目录（不是单方案产物根）
+    └── <方案目录名>/                               # 方案级产物根目录（= TECH_DESIGN_DIR）
+        ├── requirements.md                         # 由 spec skill 产出；本 skill 只读不写
+        ├── <原文件名>-review.md                    # 最终评审报告（稳定路径，重跑覆盖写）
+        ├── <原文件名>-review.bak.YYYYMMDD-HHmmss.md # 上一版备份（重跑前重命名而来）
+        └── intermediates/                          # Step 1 / 1.5 / 1.6 中间产物
 ```
 
 ### 重跑策略：先备份、再覆盖
@@ -52,7 +53,7 @@
 
 ### 报告头部元信息
 
-每份报告头部包含可追溯的元信息：原方案路径 / 原仓库根目录（`REPO_ROOT`）/ 原始需求记录路径（`<TECH_DESIGN_DIR>/requirements.md`，不存在填"无"）/ 产物根目录（`TECH_DESIGN_DIR`）/ 报告输出路径 / 上一版备份路径（首次跑填"无"）/ 中间产物清单 / 评审时间（到秒）/ skill 版本号（取自 [SKILL.md](./SKILL.md) frontmatter）。
+每份报告头部包含可追溯的元信息：原方案路径 / 原仓库根目录（`REPO_ROOT`）/ 方案目录名（`PLAN_DIR_NAME`）/ 原始需求记录路径（`<TECH_DESIGN_DIR>/requirements.md`，不存在填"无"）/ 产物根目录（`TECH_DESIGN_DIR`）/ 报告输出路径 / 上一版备份路径（首次跑填"无"）/ 中间产物清单 / 评审时间（到秒）/ skill 版本号（取自 [SKILL.md](./SKILL.md) frontmatter）。
 
 ## 目录结构
 
@@ -85,7 +86,7 @@
 
 ### 1. 在支持 Skills 的 Agent 平台
 
-将本仓库（或下面打包出的 zip）作为 Skill 导入即可。Agent 命中 [SKILL.md](./SKILL.md) 中的 "When to use" 后会自动按流程执行：先确认执行模式 → 收集上下文 → 预读 `requirements.md` / 仓库禁用清单 → 分维度评审 → 仲裁与定级 → 产出最终报告（按上面的命名 / 备份 / 覆盖规则落盘到 `.qiqskills/backend-tech/`）。
+将本仓库（或下面打包出的 zip）作为 Skill 导入即可。Agent 命中 [SKILL.md](./SKILL.md) 中的 "When to use" 后会自动按流程执行：确认模式 → 收集上下文 → 预读 `requirements.md` / 仓库禁用清单 → 分维度评审 → 仲裁定级 → 按产物规则落盘最终报告。
 
 ### 2. 本地直接当作 Prompt 资料
 

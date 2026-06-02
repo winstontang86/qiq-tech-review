@@ -6,11 +6,12 @@
 > 执行模式：{正式评审 / 初步扫描}
 > 上下文置信度：{高 / 中 / 低}
 > 原方案路径：{例如 docs/order-system.md，或"用户直接粘贴文本"}
-> 原仓库根目录：{`REPO_ROOT` 的绝对路径（含 `.git`/`.hg`/`.svn` 标识的最近父目录）；无仓库根填"无（兜底使用当前工作目录 `<CWD>`）"}
-> 原始需求记录路径：{`<TECH_DESIGN_DIR>/requirements.md` 的绝对路径；不存在填"无（未发现 .qiqskills/backend-tech/requirements.md）"。`TECH_DESIGN_DIR` 解析见 SKILL §7.1.0：**固定 = `<REPO_ROOT>/.qiqskills/backend-tech/`**（无仓库根时退到 `<CWD>/.qiqskills/backend-tech/`）}
-> 产物根目录：{`TECH_DESIGN_DIR` 的绝对路径；本 skill 所有产物（报告 + 备份 + 中间产物）统一落于此目录}
-> 报告输出路径：{绝对路径；位于产物根目录内，文件名为 `<原方案文件名>-review.md`}
-> 上一版备份路径：{重跑场景填写 `.qiqskills/backend-tech/<原文件名>-review.bak.YYYYMMDD-HHmmss.md` 的绝对路径；首次跑填"无"}
+> 原仓库根目录：{`REPO_ROOT` 的绝对路径；无仓库根填"无（兜底使用当前工作目录 `<CWD>`）"}
+> 方案目录名：{`PLAN_DIR_NAME`；按 SKILL §7.1.0 解析并安全化处理}
+> 原始需求记录路径：{`<TECH_DESIGN_DIR>/requirements.md` 的绝对路径；不存在填"无"}
+> 产物根目录：{`TECH_DESIGN_DIR` 的绝对路径；按 SKILL §7.1.0 解析出的方案级目录}
+> 报告输出路径：{`REPORT_PATH` 绝对路径；必须位于 `TECH_DESIGN_DIR` 内}
+> 上一版备份路径：{重跑场景填写备份文件绝对路径；首次跑填"无"}
 > 中间产物清单：{已落盘的中间产物文件名列表（如 `intermediates/<原文件名>-assumption-check.md`、`intermediates/<原文件名>-repo-bans.md`）；未产出填"无"}
 
 ---
