@@ -2,7 +2,7 @@
 # build.sh — 把当前 skill 打包为可分发的 zip 包
 #
 # 用法：
-#   ./build.sh            # 打包到 dist/qiq-backend-tech-review-v<version>.zip
+#   ./build.sh            # 打包到 dist/qiq-tech-review-v<version>.zip
 #                         # 版本号取自 SKILL.md frontmatter 的 version 字段（单一版本来源）
 #   ./build.sh -o foo.zip # 自定义输出路径
 #
@@ -17,7 +17,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-SKILL_NAME="qiq-backend-tech-review"
+SKILL_NAME="qiq-tech-review"
 OUT_DIR="dist"
 
 # 从 SKILL.md frontmatter 解析 version（单一版本来源），失败则回退为 0.0.0
@@ -91,7 +91,7 @@ EXCLUDES=(
   '.github/*'
   '.vscode/*'
   '.idea/*'
-  '.qiqskills/backend-tech/*'
+  '.qiqskills/*'
   'dist/*'
   'build.sh'
   'LICENSE'

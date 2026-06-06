@@ -1,4 +1,4 @@
-# qiq-backend-tech-review
+# qiq-tech-review
 
 > 互联网后台技术方案的多维度系统化评审 Skill。
 
@@ -28,12 +28,12 @@
 
 ## 评审产物（重要）
 
-每次评审的**所有产物**（最终报告 + 备份 + 中间产物）统一落盘到 **`TECH_DESIGN_DIR = <ROOT>/.qiqskills/backend-tech/<PLAN_DIR_NAME>/`**，其中 `<ROOT>` 为仓库根目录，无仓库根时为当前工作目录。详细解析规则见 [SKILL.md §7.1.0](./SKILL.md)。
+每次评审的**所有产物**（最终报告 + 备份 + 中间产物）统一落盘到 **`TECH_DESIGN_DIR = <ROOT>/.qiqskills/<PLAN_DIR_NAME>/`**，其中 `<ROOT>` 为仓库根目录，无仓库根时为当前工作目录。详细解析规则见 [SKILL.md §7.1.0](./SKILL.md)。
 
 ```
 <REPO_ROOT>/
 ├── <方案路径>/<原方案文件>.md                      # 方案可在仓库任意子目录
-└── .qiqskills/backend-tech/                        # skill 工作根目录（不是单方案产物根）
+└── .qiqskills/
     └── <方案目录名>/                               # 方案级产物根目录（= TECH_DESIGN_DIR）
         ├── requirements.md                         # 由 spec skill 产出；本 skill 只读不写
         ├── <原文件名>-review.md                    # 最终评审报告（稳定路径，重跑覆盖写）
@@ -97,7 +97,7 @@
 仓库自带打包脚本，默认产物文件名带版本号：
 
 ```bash
-# 打包到 dist/qiq-backend-tech-review-v<version>.zip
+# 打包到 dist/qiq-tech-review-v<version>.zip
 # 版本号自动取自 SKILL.md frontmatter（单一来源）
 ./build.sh
 

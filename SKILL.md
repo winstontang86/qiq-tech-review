@@ -1,10 +1,10 @@
 ---
-name: qiq-backend-tech-review
-version: 0.7.1
-description: 互联网后台技术方案的多维度系统化评审工作流。覆盖正确性 / 完整功能实现、容错 / 可用性、性能、安全、关键存储与数据结构、关键逻辑详细度、运维、简洁性、API 兼容性、仓库规则与禁用项 9 大维度，输出冲突仲裁、统一严重程度与上线门禁结论。把原始诉求作为 FR 对账的最高优先级源头，与 qiq-backend-tech 技术方案生成 skill 同址配对使用。触发：技术方案评审 / 架构评审 / 设计评审 / design review / RFC 评审 / 上线前评审。
+name: qiq-tech-review
+version: 0.7.2
+description: 互联网后台技术方案的多维度系统化评审工作流。覆盖正确性 / 完整功能实现、容错 / 可用性、性能、安全、关键存储与数据结构、关键逻辑详细度、运维、简洁性、API 兼容性、仓库规则与禁用项 9 大维度，输出冲突仲裁、统一严重程度与上线门禁结论。把原始诉求作为 FR 对账的最高优先级源头，与 qiq-prd2tech 技术方案生成 skill 同址配对使用。触发：技术方案评审 / 架构评审 / 设计评审 / design review / RFC 评审 / 上线前评审。
 ---
 
-# qiq-backend-tech-review — 互联网后台技术方案多维校验
+# qiq-tech-review — 互联网后台技术方案多维校验
 
 ## When to use
 
@@ -192,32 +192,32 @@ description: 互联网后台技术方案的多维度系统化评审工作流。�
 
 > **本步是动作指令，不是规则描述**。Agent 必须**真正调用文件写入工具**把报告内容写到磁盘上的目标文件；只在对话里贴出报告内容**不算**完成本步。
 
-**统一产物根目录（强制）**：本 skill 的**所有产物**——最终评审报告、上一版备份、所有中间产物——一律落盘到 **`TECH_DESIGN_DIR`**，不得散落到原方案目录、`.qiqskills/backend-tech/` 根目录或其它位置。与 `qiq-backend-tech` skill 配对，形成"方案产出 ↔ 评审产物"的同址闭环。
+**统一产物根目录（强制）**：本 skill 的**所有产物**——最终评审报告、上一版备份、所有中间产物——一律落盘到 **`TECH_DESIGN_DIR`**，不得散落到原方案目录、`.qiqskills/` 根目录或其它位置。与 `qiq-tech-design` skill 配对，形成"方案产出 ↔ 评审产物"的同址闭环。
 
 #### 7.1.0 `TECH_DESIGN_DIR` 解析规则（**全文唯一权威定义**）
 
-> `TECH_DESIGN_DIR` 是**方案级产物目录**：`<ROOT>/.qiqskills/backend-tech/<PLAN_DIR_NAME>/`。其中 `<ROOT>` 为 `REPO_ROOT`，无仓库根时为 `<CWD>`；读（Step 1.0）和写（Step 7）必须复用同一次解析结果。
+> `TECH_DESIGN_DIR` 是**方案级产物目录**：`<ROOT>/.qiqskills/<PLAN_DIR_NAME>/`。其中 `<ROOT>` 为 `REPO_ROOT`，无仓库根时为 `<CWD>`；读（Step 1.0）和写（Step 7）必须复用同一次解析结果。
 
 **解析步骤**：
 
 1. **定位 `REPO_ROOT`**：从原方案文件所在目录开始逐级向上回溯，遇到第一个含 `.git` / `.hg` / `.svn` 标识的目录即为 `REPO_ROOT`；未命中则视为"无仓库根"并使用 `<CWD>` 兜底。粘贴文本场景以当前工作目录作为起点。
 2. **确定方案目录名 `PLAN_DIR_NAME`**：原方案来自文件时，优先用显式方案名称，否则用原方案文件名（不含扩展名）；用户直接粘贴文本时，优先用用户给出的方案名称，否则用 `tech-review-YYYYMMDD-HHmmss`。目录名需安全化：去掉首尾空白，并将 `/`、`\\`、`:`、`*`、`?`、`"`、`<`、`>`、`|`、连续空白替换为 `-`；处理后为空则兜底为 `tech-review-YYYYMMDD-HHmmss`。
-3. **计算 `TECH_DESIGN_DIR`**：`(<REPO_ROOT> 或 <CWD>)/.qiqskills/backend-tech/<PLAN_DIR_NAME>`；不存在则在写场景下真实创建。
-4. **禁止错误层级**：单个方案的产物不得直接放在 `.qiqskills/backend-tech/` 根目录，也不得放在方案文件所在子目录；如发现历史散落，可在报告"备注"中提示清理。
+3. **计算 `TECH_DESIGN_DIR`**：`(<REPO_ROOT> 或 <CWD>)/.qiqskills/<PLAN_DIR_NAME>`；不存在则在写场景下真实创建。
+4. **禁止错误层级**：单个方案的产物不得直接放在 `.qiqskills/` 根目录，也不得放在方案文件所在子目录；如发现历史散落，可在报告"备注"中提示清理。
 
-**目录布局**：
+#### 7.1.1 目录结构示例
 
+```text
+<REPO_ROOT> 或 <CWD>
+└── .qiqskills/
+    └── <PLAN_DIR_NAME>/                        # TECH_DESIGN_DIR (方案级产物根)
+        ├── requirements.md                     # 原始需求记录（预读源头）
+        ├── <原方案文件名>-review.md              # 本次最终评审报告
+        ├── <原方案文件名>-review.bak.YYYYMMDD-HHmmss.md # 上一版备份
+        └── intermediates/                      # 中间产物目录
+            ├── <原方案文件名>-assumption-check.md
+            └── <原方案文件名>-repo-bans.md
 ```
-<REPO_ROOT>/
-├── <方案路径>/<原方案文件>.md                      # 方案可在仓库任意子目录
-└── .qiqskills/backend-tech/                        # skill 工作根目录（不是单方案产物根）
-    └── <方案目录名>/                               # 方案级产物根目录（= TECH_DESIGN_DIR）
-        ├── requirements.md                         # 由 spec skill 产出；本 skill 只读不写
-        ├── <原文件名>-review.md                    # 最终评审报告（稳定路径，重跑覆盖写）
-        ├── <原文件名>-review.bak.YYYYMMDD-HHmmss.md # 上一版备份（重跑前重命名而来）
-        └── intermediates/                          # Step 1 / 1.5 / 1.6 中间产物（建议产出）
-```
-
 **硬动作（必做，按顺序执行）**：
 
 1. 按 §7.1.0 解析 `PLAN_DIR_NAME` 与 `TECH_DESIGN_DIR`，并确保目录存在。
@@ -245,7 +245,7 @@ description: 互联网后台技术方案的多维度系统化评审工作流。�
 - **凭外部依赖的"理论能力"评审** → 出现 Step 1.5 三个信号任一项时必须走 Step 1.5。
 - **跳过仓库规则预扫描** → Step 1.6 必须执行；空清单必须显式声明，不得静默跳过。
 - **漏读原始需求记录（`requirements.md`）** → Step 1.0 必须先按 §7.1.0 解析 `TECH_DESIGN_DIR`，再检测 `requirements.md` 是否存在；存在就**真读**；不存在显式记录"无"，不得静默跳过。
-- **`TECH_DESIGN_DIR` 落地漂移** → 产物只能落到 §7.1.0 解析出的方案级目录，不能落到 `.qiqskills/backend-tech/` 根目录、方案文件所在子目录或其它目录。
+- **`TECH_DESIGN_DIR` 落地漂移** → 产物只能落到 §7.1.0 解析出的方案级目录，不能落到 `.qiqskills/` 根目录、方案文件所在子目录或其它目录。
 - **只列问题不出对账矩阵** → 5 类强制矩阵缺一不可。
 - **跳过上下文、输出格式漂移、只列问题不给建议、严重程度跨维度漂移、门禁凭感觉、只挑刺不肯定** → 在 Verification 自检中逐条收敛。
 - **Step 7 落盘违规**：①只在对话里贴报告不调用写工具 ②重跑不真备份就覆盖 ③报告头不写 skill 版本号 ④把产物落盘到 `TECH_DESIGN_DIR` 之外 → Step 7 硬动作必须**真的执行**，并在对话里回显 `REPO_ROOT` / `PLAN_DIR_NAME` / `TECH_DESIGN_DIR` / `REPORT_PATH`。
@@ -287,5 +287,5 @@ description: 互联网后台技术方案的多维度系统化评审工作流。�
 - [ ] 已给出"设计亮点"小节。
 - [ ] 正式评审模式下，已按门禁规则给出明确结论；初步扫描模式下，已声明置信度并未输出门禁结论。
 - [ ] **已真正调用写文件工具**把报告写入磁盘并给出**绝对路径**；如当前环境无写文件能力，已显式告知用户"未落盘"并标 "未达成"，未做静默降级。
-- [ ] **所有产物统一收口到 `TECH_DESIGN_DIR`**：报告、备份、已产出的中间产物一律落于 §7.1.0 解析出的方案级目录；未散落到 `.qiqskills/backend-tech/` 根目录、方案子目录或其它位置；目录已真实创建；对话中已回显 `REPO_ROOT`、`PLAN_DIR_NAME`、`TECH_DESIGN_DIR`、`REPORT_PATH`；重跑场景已真正执行重命名备份动作（不是"声称已备份"）。
+- [ ] **所有产物统一收口到 `TECH_DESIGN_DIR`**：报告、备份、已产出的中间产物一律落于 §7.1.0 解析出的方案级目录；未散落到 `.qiqskills/` 根目录、方案子目录或其它位置；目录已真实创建；对话中已回显 `REPO_ROOT`、`PLAN_DIR_NAME`、`TECH_DESIGN_DIR`、`REPORT_PATH`；重跑场景已真正执行重命名备份动作（不是"声称已备份"）。
 - [ ] 报告头部已记录原方案路径、原仓库根目录、方案目录名、原始需求记录路径、产物根目录、报告输出路径、上一版备份路径、中间产物清单、评审时间、skill 版本号；字段值与对话回显路径一致（不是模板占位 `{...}`）。

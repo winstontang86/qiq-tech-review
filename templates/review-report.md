@@ -1,7 +1,7 @@
 # 技术方案评审报告 — {方案名称}
 
 > 评审时间：YYYY-MM-DD HH:mm:ss
-> 评审人：qiq-backend-tech-review skill
+> 评审人：qiq-tech-review skill
 > skill 版本：{读取 SKILL.md frontmatter 的 `version` 字段，以 SKILL.md 为准}
 > 执行模式：{正式评审 / 初步扫描}
 > 上下文置信度：{高 / 中 / 低}
